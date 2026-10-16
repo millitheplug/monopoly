@@ -16,7 +16,9 @@ const COLORS = { felt: '#1b3930', edge: '#142820', gold: '#d6b56e', cream: '#f3e
 
 function initThree() {
   scene = new THREE.Scene(); scene.background = new THREE.Color('#101a17'); scene.fog = new THREE.Fog('#101a17', 20, 38);
-  camera = new THREE.PerspectiveCamera(34, gameRoot.clientWidth / gameRoot.clientHeight, .1, 100); camera.position.set(10.5, 15.5, 13.2);
+  const initialAspect = gameRoot.clientWidth / Math.max(1, gameRoot.clientHeight);
+  camera = new THREE.PerspectiveCamera(initialAspect < .82 ? 39 : 34, initialAspect, .1, 100);
+  camera.position.set(initialAspect < .82 ? 10.5 : 10.5, initialAspect < .82 ? 20.5 : 15.5, initialAspect < .82 ? 15.8 : 13.2);
   renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'high-performance' });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.8)); renderer.setSize(gameRoot.clientWidth, gameRoot.clientHeight);
   renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap; renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -126,7 +128,9 @@ function animate(time = 0) {
 }
 function onResize() {
   if (!renderer || !camera) return; const w = gameRoot.clientWidth || window.innerWidth, h = gameRoot.clientHeight || window.innerHeight;
-  camera.aspect = w/h; camera.updateProjectionMatrix(); renderer.setSize(w,h); renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.8));
+  const aspect = w / h;
+  camera.aspect = aspect; camera.fov = aspect < .82 ? 39 : 34; camera.updateProjectionMatrix();
+  renderer.setSize(w,h); renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.8));
 }
 function onPointerMove(event) {
   const rect = renderer.domElement.getBoundingClientRect(); pointer.x = ((event.clientX-rect.left)/rect.width)*2-1; pointer.y = -((event.clientY-rect.top)/rect.height)*2+1;
