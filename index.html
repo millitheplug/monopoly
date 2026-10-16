@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#101b17" />
+    <meta name="description" content="A cinematic, 3D Monopoly table with a Lagos-inspired world-first interface." />
+    <title>Monopoly — Lagos Edition</title>
+  </head>
+  <body>
+    <div id="app">
+      <div id="world"></div>
+      <div class="ambient-grain"></div>
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Monopoly home"><span class="brand-mark">M</span><span><b>MONOPOLY</b><small>THE CITY IS YOURS</small></span></a>
+        <div class="topbar-center"><span class="live-dot"></span> TABLE LIVE <span class="topbar-divider">/</span> <span id="phase-label">SETUP</span></div>
+        <div class="topbar-actions"><button class="icon-button" id="sound-toggle" title="Toggle sound" aria-label="Toggle sound">♫</button><button class="icon-button" id="camera-toggle" title="Change camera" aria-label="Change camera">◉</button><button class="avatar-button" id="help-toggle" title="How to play">?</button></div>
+      </header>
+      <main class="game-layout">
+        <aside class="left-rail">
+          <div class="section-kicker">YOUR TABLE <span class="tiny-live">● LIVE</span></div>
+          <div id="player-list" class="player-list"></div>
+          <div class="rail-divider"></div>
+          <div class="section-kicker">CITY FEED <span id="feed-count">01</span></div>
+          <div id="activity-feed" class="activity-feed" aria-live="polite"></div>
+          <div class="rail-footer"><span class="signal-icon">⌁</span><span>Everything moves.<br/><b>Make your move.</b></span></div>
+        </aside>
+        <section class="world-stage" aria-label="3D Monopoly board">
+          <div class="stage-vignette"></div>
+          <div class="world-label"><span class="world-pin">⌖</span><div><b>THE BOARD</b><small>40 STOPS · ONE CITY</small></div></div>
+          <div class="stage-controls"><button id="zoom-out" aria-label="Zoom out">−</button><button id="zoom-in" aria-label="Zoom in">+</button><button id="reset-camera" aria-label="Reset camera">⌖</button></div>
+          <div id="hover-card" class="hover-card hidden"></div>
+          <div id="dice-burst" class="dice-burst hidden"><span>⚄</span><span>⚂</span><b>DOUBLES!</b></div>
+          <div class="stage-bottom"><span><i></i> 3D TABLE ACTIVE</span><span>DRAG TO ORBIT <b>↗</b></span></div>
+        </section>
+        <aside class="right-rail">
+          <div class="turn-card"><div class="turn-card-top"><span class="section-kicker">CURRENT TURN</span><span class="turn-number" id="turn-number">01 / 40</span></div><div class="turn-player"><div id="turn-token" class="turn-token">🚗</div><div><b id="turn-name">Player 1</b><small id="turn-status">Ready to roll</small></div><span class="turn-pulse"></span></div><div class="turn-card-bottom"><div><small>WALLET</small><b id="wallet-value">$1,500</b></div><div><small>PROPERTIES</small><b id="property-count">00</b></div><div><small>NET WORTH</small><b id="net-worth">$1,500</b></div></div></div>
+          <div class="action-card"><div class="action-heading"><div><span class="section-kicker">YOUR MOVE</span><h2 id="action-title">Roll the dice.</h2></div><span class="action-spark">✳</span></div><p id="action-copy">The city is open. Let's see where you land.</p><div class="dice-row"><div class="die" id="die-one"><span>⚀</span></div><div class="die" id="die-two"><span>⚅</span></div><div class="dice-total"><small>TOTAL</small><b id="dice-total">—</b></div></div><button class="primary-action" id="roll-button"><span>ROLL DICE</span><span>↗</span></button><div id="context-actions" class="context-actions"></div><div class="action-foot"><span>✦ STRATEGY OVER LUCK</span><span id="doubles-count">DOUBLES 0/3</span></div></div>
+          <div class="property-card" id="property-card"><div class="property-card-top"><span class="section-kicker">LANDING SPOT</span><span id="property-kind" class="kind-chip">START HERE</span></div><div class="property-title-row"><div id="property-color" class="property-color"></div><div><h3 id="property-name">GO</h3><small id="property-subtitle">Collect $200 as you pass</small></div></div><div class="property-stats"><div><small>PRICE</small><b id="property-price">—</b></div><div><small>BASE RENT</small><b id="property-rent">—</b></div><div><small>OWNER</small><b id="property-owner">BANK</b></div></div><div id="property-extra" class="property-extra">Every lap is another chance to build your empire.</div></div>
+          <div class="quick-actions"><button id="trade-button"><span>⇄</span><span>TRADE</span></button><button id="manage-button"><span>⌂</span><span>PROPERTIES</span></button><button id="rules-button"><span>☷</span><span>RULES</span></button></div>
+        </aside>
+      </main>
+      <footer class="bottom-bar"><div class="bottom-status"><span class="live-dot"></span><span id="bottom-message">Waiting for players to take their seats.</span></div><div class="bottom-meta"><span>CLASSIC RULES</span><span class="meta-sep">·</span><span>3D EDITION</span><span class="meta-sep">·</span><span>V1.0</span></div></footer>
+      <div class="modal-backdrop" id="modal-backdrop"><section class="modal setup-modal" id="setup-modal"><div class="modal-eyebrow"><span class="brand-mark">M</span> A NEW CITY AWAITS</div><h1>Own the streets.<br/><em>Build your legacy.</em></h1><p class="modal-lede">A living 3D Monopoly table. Buy the blocks, collect the rent, and turn a little luck into a city-sized fortune.</p><div class="setup-label">WHO'S PLAYING?</div><div class="setup-player-count" id="setup-player-count"><button data-count="2" class="selected">2 PLAYERS</button><button data-count="3">3 PLAYERS</button><button data-count="4">4 PLAYERS</button></div><div class="setup-preview" id="setup-preview"></div><button class="primary-action setup-start" id="start-game"><span>TAKE YOUR SEAT</span><span>↗</span></button><div class="setup-note">LOCAL TABLE · 2–4 PLAYERS · NO ACCOUNT NEEDED</div></section></div>
+      <div class="modal-backdrop hidden" id="dialog-backdrop"><section class="modal dialog-modal"><button class="modal-close" id="dialog-close" aria-label="Close">×</button><div id="dialog-content"></div></section></div>
+      <div id="toast" class="toast" role="status"></div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
